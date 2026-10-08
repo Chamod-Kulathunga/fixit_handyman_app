@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../data/models/provider_model.dart';
 import '../providers/category_list_provider.dart';
 import '../providers/provider_list_provider.dart';
+import 'provider_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -415,87 +416,105 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildProviderCard(ProviderModel provider) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 26,
-                  child: Text(
-                    provider.name.isNotEmpty
-                        ? provider.name[0].toUpperCase()
-                        : '?',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ProviderDetailScreen(provider: provider),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 26,
+                    child: Text(
+                      provider.name.isNotEmpty
+                          ? provider.name[0].toUpperCase()
+                          : '?',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        provider.name,
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          provider.name,
+                          style: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        provider.location,
-                        style: TextStyle(color: Colors.grey.shade600),
-                      ),
-                    ],
-                  ),
-                ),
-                _buildAvailabilityBadge(provider),
-              ],
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                const Icon(Icons.star, size: 20),
-                const SizedBox(width: 4),
-                Text(
-                  provider.rating.toStringAsFixed(1),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(width: 4),
-                Text('(${provider.reviewCount} reviews)'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '${provider.experienceYears} years experience • '
-              'LKR ${provider.hourlyRate.toStringAsFixed(0)}/hr',
-            ),
-            const SizedBox(height: 10),
-            Text(
-              provider.description,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
-              children: provider.skills
-                  .take(3)
-                  .map(
-                    (skill) => Chip(
-                      label: Text(skill),
-                      visualDensity: VisualDensity.compact,
+                        const SizedBox(height: 4),
+                        Text(
+                          provider.location,
+                          style: TextStyle(color: Colors.grey.shade600),
+                        ),
+                      ],
                     ),
-                  )
-                  .toList(),
-            ),
-          ],
+                  ),
+                  _buildAvailabilityBadge(provider),
+                ],
+              ),
+
+              const SizedBox(height: 14),
+
+              Row(
+                children: [
+                  const Icon(Icons.star, size: 20),
+                  const SizedBox(width: 4),
+                  Text(
+                    provider.rating.toStringAsFixed(1),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(width: 4),
+                  Text('(${provider.reviewCount} reviews)'),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+
+              Text(
+                '${provider.experienceYears} years experience • '
+                'LKR ${provider.hourlyRate.toStringAsFixed(0)}/hr',
+              ),
+
+              const SizedBox(height: 10),
+
+              Text(
+                provider.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+
+              const SizedBox(height: 12),
+
+              Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: provider.skills
+                    .take(3)
+                    .map(
+                      (skill) => Chip(
+                        label: Text(skill),
+                        visualDensity: VisualDensity.compact,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );

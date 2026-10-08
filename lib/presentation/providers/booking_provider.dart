@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 
 import '../../core/enums/booking_status.dart';
 import '../../data/models/booking_model.dart';
-import '../../domain/repositories/booking_repository.dart';
 import '../../domain/business_logic/booking_status_logic.dart';
+import '../../domain/repositories/booking_repository.dart';
 
 enum BookingListStatus { initial, loading, success, error }
 
@@ -25,17 +25,25 @@ class BookingProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   List<BookingModel> get upcomingBookings {
-    return _bookings.where((booking) {
+    final upcoming = _bookings.where((booking) {
       return BookingStatusLogic.isActive(booking.status);
     }).toList();
+
+    upcoming.sort((a, b) => a.bookingDate.compareTo(b.bookingDate));
+
+    return upcoming;
   }
 
   List<BookingModel> get historyBookings {
-    return _bookings.where((booking) {
+    final history = _bookings.where((booking) {
       return booking.status == BookingStatus.completed ||
           booking.status == BookingStatus.cancelled ||
           booking.status == BookingStatus.rejected;
     }).toList();
+
+    history.sort((a, b) => b.bookingDate.compareTo(a.bookingDate));
+
+    return history;
   }
 
   Future<void> loadBookings() async {
@@ -45,7 +53,9 @@ class BookingProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _bookings = await _repository.getBookings();
+      final bookings = await _repository.getBookings();
+
+      _bookings = List<BookingModel>.from(bookings);
 
       _status = BookingListStatus.success;
     } catch (error) {
@@ -57,6 +67,8 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<bool> createBooking(BookingModel booking) async {
+    _errorMessage = null;
+
     try {
       final hasConflict = await _repository.hasActiveBooking(
         providerId: booking.providerId,
@@ -67,7 +79,9 @@ class BookingProvider extends ChangeNotifier {
       if (hasConflict) {
         _errorMessage =
             'This provider is already booked for this date and time slot.';
+
         notifyListeners();
+
         return false;
       }
 
@@ -80,6 +94,7 @@ class BookingProvider extends ChangeNotifier {
       return true;
     } catch (error) {
       _errorMessage = error.toString();
+
       notifyListeners();
 
       return false;
@@ -87,19 +102,27 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<bool> updateBooking(BookingModel booking) async {
+    _errorMessage = null;
+
     try {
       await _repository.updateBooking(booking);
 
       final index = _bookings.indexWhere((item) => item.id == booking.id);
 
       if (index != -1) {
-        _bookings[index] = booking;
+        final updatedBookings = List<BookingModel>.from(_bookings);
+
+        updatedBookings[index] = booking;
+
+        _bookings = updatedBookings;
+
         notifyListeners();
       }
 
       return true;
     } catch (error) {
       _errorMessage = error.toString();
+
       notifyListeners();
 
       return false;
@@ -155,7 +178,12 @@ class BookingProvider extends ChangeNotifier {
   }
 
   void clearError() {
+    if (_errorMessage == null) {
+      return;
+    }
+
     _errorMessage = null;
+
     notifyListeners();
   }
 }

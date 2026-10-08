@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/enums/booking_status.dart';
+import '../../core/validators/booking_validators.dart';
+import '../../data/models/booking_model.dart';
 import '../../data/models/provider_model.dart';
 import '../../domain/business_logic/booking_cost_calculator.dart';
-import '../../core/validators/booking_validators.dart';
+import '../../domain/business_logic/booking_id_generator.dart';
+import '../providers/booking_provider.dart';
+import 'booking_confirmation_screen.dart';
 
 class BookingFormScreen extends StatefulWidget {
   final ProviderModel provider;
@@ -29,6 +35,8 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
   BookingCostBreakdown? _costBreakdown;
 
+  bool _isSubmitting = false;
+
   final List<String> _timeSlots = [
     '09:00 AM - 11:00 AM',
     '11:00 AM - 01:00 PM',
@@ -53,13 +61,11 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
   }
 
   void _updateCost() {
-    if (_selectedDate == null) {
+    if (_selectedDate == null || !mounted) {
       return;
     }
 
-    setState(() {
-      _calculateCost();
-    });
+    setState(_calculateCost);
   }
 
   void _calculateCost() {
@@ -80,8 +86,12 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
     final selectedDate = await showDatePicker(
       context: context,
-      firstDate: now,
-      lastDate: now.add(const Duration(days: 365)),
+      firstDate: DateTime(now.year, now.month, now.day),
+      lastDate: DateTime(
+        now.year,
+        now.month,
+        now.day,
+      ).add(const Duration(days: 365)),
       initialDate: _selectedDate ?? now,
     );
 
@@ -95,23 +105,114 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
     });
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
+    if (_isSubmitting) {
+      return;
+    }
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
     if (_selectedDate == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a booking date')),
-      );
+      _showMessage('Please select a booking date.');
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Booking submission will be connected next.'),
-      ),
+    final cost = _costBreakdown;
+
+    if (cost == null) {
+      _showMessage('Unable to calculate booking cost.');
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    final booking = BookingModel(
+      id: BookingIdGenerator.generate(_selectedDate!),
+      providerId: widget.provider.id,
+      providerName: widget.provider.name,
+      service: _formatServiceName(widget.provider.categoryId),
+      customerName: _nameController.text.trim(),
+      phone: _phoneController.text.trim(),
+      address: _addressController.text.trim(),
+      jobDescription: _descriptionController.text.trim(),
+      bookingDate: _selectedDate!,
+      timeSlot: _selectedTimeSlot,
+      estimatedHours: _estimatedHours,
+      hourlyRate: widget.provider.hourlyRate,
+      labourCost: cost.labourCost,
+      visitingCharge: cost.visitingCharge,
+      weekendSurcharge: cost.weekendSurcharge,
+      totalCost: cost.totalCost,
+      status: BookingStatus.pending,
+      createdAt: DateTime.now(),
     );
+
+    try {
+      final bookingProvider = context.read<BookingProvider>();
+
+      final success = await bookingProvider.createBooking(booking);
+
+      if (!mounted) {
+        return;
+      }
+
+      if (!success) {
+        setState(() {
+          _isSubmitting = false;
+        });
+
+        final message =
+            bookingProvider.errorMessage ?? 'Unable to create booking.';
+
+        _showMessage(message);
+        return;
+      }
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => BookingConfirmationScreen(booking: booking),
+        ),
+      );
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _isSubmitting = false;
+      });
+
+      _showMessage('Something went wrong while creating the booking.');
+    }
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  String _formatServiceName(String categoryId) {
+    switch (categoryId) {
+      case 'ac_repair':
+        return 'AC Repair';
+      case 'plumbing':
+        return 'Plumbing';
+      case 'electrical':
+        return 'Electrical';
+      case 'carpentry':
+        return 'Carpentry';
+      case 'painting':
+        return 'Painting';
+      case 'cleaning':
+        return 'Cleaning';
+      default:
+        return categoryId;
+    }
   }
 
   @override
@@ -135,6 +236,8 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
             TextFormField(
               controller: _nameController,
+              enabled: !_isSubmitting,
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 labelText: 'Full Name',
                 border: OutlineInputBorder(),
@@ -146,7 +249,9 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
             TextFormField(
               controller: _phoneController,
+              enabled: !_isSubmitting,
               keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 labelText: 'Phone Number',
                 border: OutlineInputBorder(),
@@ -158,6 +263,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
             TextFormField(
               controller: _addressController,
+              enabled: !_isSubmitting,
               maxLines: 3,
               decoration: const InputDecoration(
                 labelText: 'Address',
@@ -174,6 +280,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
             ListTile(
               contentPadding: EdgeInsets.zero,
+              enabled: !_isSubmitting,
               leading: const Icon(Icons.calendar_month),
               title: const Text('Booking Date'),
               subtitle: Text(
@@ -182,7 +289,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
                     : _formatDate(_selectedDate!),
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTap: _selectDate,
+              onTap: _isSubmitting ? null : _selectDate,
             ),
 
             const Divider(),
@@ -198,15 +305,17 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
                     (slot) => DropdownMenuItem(value: slot, child: Text(slot)),
                   )
                   .toList(),
-              onChanged: (value) {
-                if (value == null) {
-                  return;
-                }
+              onChanged: _isSubmitting
+                  ? null
+                  : (value) {
+                      if (value == null) {
+                        return;
+                      }
 
-                setState(() {
-                  _selectedTimeSlot = value;
-                });
-              },
+                      setState(() {
+                        _selectedTimeSlot = value;
+                      });
+                    },
             ),
 
             const SizedBox(height: 16),
@@ -221,25 +330,31 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
                 8,
                 (index) => DropdownMenuItem(
                   value: index + 1,
-                  child: Text('${index + 1} hour${index == 0 ? '' : 's'}'),
+                  child: Text(
+                    '${index + 1} hour'
+                    '${index == 0 ? '' : 's'}',
+                  ),
                 ),
               ),
-              onChanged: (value) {
-                if (value == null) {
-                  return;
-                }
+              onChanged: _isSubmitting
+                  ? null
+                  : (value) {
+                      if (value == null) {
+                        return;
+                      }
 
-                setState(() {
-                  _estimatedHours = value;
-                  _calculateCost();
-                });
-              },
+                      setState(() {
+                        _estimatedHours = value;
+                        _calculateCost();
+                      });
+                    },
             ),
 
             const SizedBox(height: 16),
 
             TextFormField(
               controller: _descriptionController,
+              enabled: !_isSubmitting,
               maxLines: 5,
               maxLength: 300,
               decoration: InputDecoration(
@@ -260,11 +375,20 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
             SizedBox(
               height: 52,
               child: ElevatedButton(
-                onPressed: _submitForm,
-                child: const Text(
-                  'Continue Booking',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
+                onPressed: _isSubmitting ? null : _submitForm,
+                child: _isSubmitting
+                    ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2.5),
+                      )
+                    : const Text(
+                        'Continue Booking',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ),
 
@@ -284,14 +408,18 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
             CircleAvatar(
               radius: 30,
               child: Text(
-                widget.provider.name[0],
+                widget.provider.name.isEmpty
+                    ? '?'
+                    : widget.provider.name[0].toUpperCase(),
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+
             const SizedBox(width: 14),
+
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,7 +450,8 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            'Select a booking date to calculate the total cost.',
+            'Select a booking date to calculate '
+            'the total cost.',
             style: TextStyle(color: Colors.grey.shade700),
           ),
         ),

@@ -1,0 +1,570 @@
+{
+  "categories": [
+    {
+      "id": "plumbing",
+      "name": "Plumbing"
+    },
+    {
+      "id": "electrical",
+      "name": "Electrical"
+    },
+    {
+      "id": "carpentry",
+      "name": "Carpentry"
+    },
+    {
+      "id": "painting",
+      "name": "Painting"
+    },
+    {
+      "id": "ac_repair",
+      "name": "AC Repair"
+    },
+    {
+      "id": "cleaning",
+      "name": "Cleaning"
+    }
+  ],
+  "providers": [
+    {
+      "id": "p001",
+      "name": "Kamal Perera",
+      "categoryId": "plumbing",
+      "rating": 4.7,
+      "reviewCount": 52,
+      "completedJobs": 128,
+      "experienceYears": 8,
+      "hourlyRate": 2500,
+      "location": "Ragama",
+      "isAvailable": true,
+      "description": "Experienced plumber for leaks, pipes and bathroom fittings.",
+      "skills": [
+        "Leak repair",
+        "Pipe fitting",
+        "Water heaters"
+      ]
+    },
+    {
+      "id": "p002",
+      "name": "Nuwan Silva",
+      "categoryId": "electrical",
+      "rating": 4.4,
+      "reviewCount": 37,
+      "completedJobs": 96,
+      "experienceYears": 6,
+      "hourlyRate": 3000,
+      "location": "Negombo",
+      "isAvailable": false,
+      "description": "Electrician for wiring, electrical faults and lighting.",
+      "skills": [
+        "House wiring",
+        "Fault finding",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "p003",
+      "name": "Saman Fernando",
+      "categoryId": "carpentry",
+      "rating": 4.8,
+      "reviewCount": 64,
+      "completedJobs": 154,
+      "experienceYears": 10,
+      "hourlyRate": 2800,
+      "location": "Colombo",
+      "isAvailable": true,
+      "description": "Professional carpenter for furniture and wooden repairs.",
+      "skills": [
+        "Furniture repair",
+        "Custom furniture",
+        "Woodwork"
+      ]
+    },
+    {
+      "id": "p004",
+      "name": "Dinesh Perera",
+      "categoryId": "painting",
+      "rating": 4.5,
+      "reviewCount": 41,
+      "completedJobs": 88,
+      "experienceYears": 7,
+      "hourlyRate": 2200,
+      "location": "Kaduwela",
+      "isAvailable": true,
+      "description": "Interior and exterior painting specialist.",
+      "skills": [
+        "Interior painting",
+        "Exterior painting",
+        "Wall preparation"
+      ]
+    },
+    {
+      "id": "p005",
+      "name": "Ruwan Jayasinghe",
+      "categoryId": "ac_repair",
+      "rating": 4.6,
+      "reviewCount": 48,
+      "completedJobs": 112,
+      "experienceYears": 9,
+      "hourlyRate": 3500,
+      "location": "Nugegoda",
+      "isAvailable": true,
+      "description": "AC technician specializing in servicing and repairs.",
+      "skills": [
+        "AC servicing",
+        "Gas charging",
+        "AC repair"
+      ]
+    },
+    {
+      "id": "p006",
+      "name": "Chaminda Silva",
+      "categoryId": "cleaning",
+      "rating": 4.3,
+      "reviewCount": 29,
+      "completedJobs": 71,
+      "experienceYears": 5,
+      "hourlyRate": 1800,
+      "location": "Dehiwala",
+      "isAvailable": true,
+      "description": "Reliable home and office cleaning service provider.",
+      "skills": [
+        "House cleaning",
+        "Office cleaning",
+        "Deep cleaning"
+      ]
+    },
+    {
+      "id": "p007",
+      "name": "Kasun Wijesinghe",
+      "categoryId": "plumbing",
+      "rating": 4.5,
+      "reviewCount": 35,
+      "completedJobs": 82,
+      "experienceYears": 6,
+      "hourlyRate": 2400,
+      "location": "Maharagama",
+      "isAvailable": true,
+      "description": "Plumbing specialist for household water systems.",
+      "skills": [
+        "Pipe repair",
+        "Leak detection",
+        "Tap repair"
+      ]
+    },
+    {
+      "id": "p008",
+      "name": "Tharindu Perera",
+      "categoryId": "electrical",
+      "rating": 4.7,
+      "reviewCount": 55,
+      "completedJobs": 130,
+      "experienceYears": 8,
+      "hourlyRate": 3200,
+      "location": "Battaramulla",
+      "isAvailable": true,
+      "description": "Qualified electrician for domestic electrical work.",
+      "skills": [
+        "Wiring",
+        "Switch repair",
+        "Lighting installation"
+      ]
+    },
+    {
+      "id": "p009",
+      "name": "Ajith Bandara",
+      "categoryId": "carpentry",
+      "rating": 4.2,
+      "reviewCount": 27,
+      "completedJobs": 65,
+      "experienceYears": 5,
+      "hourlyRate": 2600,
+      "location": "Kotte",
+      "isAvailable": false,
+      "description": "Carpenter specializing in doors, cabinets and repairs.",
+      "skills": [
+        "Door repair",
+        "Cabinet repair",
+        "Furniture assembly"
+      ]
+    },
+    {
+      "id": "p010",
+      "name": "Pradeep Kumara",
+      "categoryId": "painting",
+      "rating": 4.6,
+      "reviewCount": 44,
+      "completedJobs": 101,
+      "experienceYears": 8,
+      "hourlyRate": 2300,
+      "location": "Malabe",
+      "isAvailable": true,
+      "description": "Painting specialist for residential properties.",
+      "skills": [
+        "Wall painting",
+        "Texture painting",
+        "Color consultation"
+      ]
+    },
+    {
+      "id": "p011",
+      "name": "Isuru Fernando",
+      "categoryId": "ac_repair",
+      "rating": 4.4,
+      "reviewCount": 33,
+      "completedJobs": 79,
+      "experienceYears": 6,
+      "hourlyRate": 3300,
+      "location": "Rajagiriya",
+      "isAvailable": true,
+      "description": "AC repair and maintenance technician.",
+      "skills": [
+        "AC repair",
+        "AC cleaning",
+        "Gas refill"
+      ]
+    },
+    {
+      "id": "p012",
+      "name": "Sunil Perera",
+      "categoryId": "cleaning",
+      "rating": 4.8,
+      "reviewCount": 61,
+      "completedJobs": 142,
+      "experienceYears": 9,
+      "hourlyRate": 1900,
+      "location": "Mount Lavinia",
+      "isAvailable": true,
+      "description": "Experienced cleaning provider for homes and offices.",
+      "skills": [
+        "Deep cleaning",
+        "Kitchen cleaning",
+        "Bathroom cleaning"
+      ]
+    },
+    {
+      "id": "p013",
+      "name": "Mahesh Kumar",
+      "categoryId": "plumbing",
+      "rating": 4.1,
+      "reviewCount": 22,
+      "completedJobs": 54,
+      "experienceYears": 4,
+      "hourlyRate": 2100,
+      "location": "Kelaniya",
+      "isAvailable": true,
+      "description": "Plumber for bathroom and kitchen plumbing repairs.",
+      "skills": [
+        "Bathroom plumbing",
+        "Kitchen plumbing",
+        "Drain repair"
+      ]
+    },
+    {
+      "id": "p014",
+      "name": "Roshan Silva",
+      "categoryId": "electrical",
+      "rating": 4.6,
+      "reviewCount": 46,
+      "completedJobs": 108,
+      "experienceYears": 7,
+      "hourlyRate": 2900,
+      "location": "Wattala",
+      "isAvailable": true,
+      "description": "Experienced electrician for home electrical systems.",
+      "skills": [
+        "Electrical repair",
+        "Wiring",
+        "Fan installation"
+      ]
+    },
+    {
+      "id": "p015",
+      "name": "Lahiru Jayawardena",
+      "categoryId": "carpentry",
+      "rating": 4.4,
+      "reviewCount": 38,
+      "completedJobs": 91,
+      "experienceYears": 7,
+      "hourlyRate": 2700,
+      "location": "Piliyandala",
+      "isAvailable": true,
+      "description": "Carpenter for custom furniture and home repairs.",
+      "skills": [
+        "Furniture making",
+        "Wood repair",
+        "Shelves"
+      ]
+    },
+    {
+      "id": "p016",
+      "name": "Ramesh Perera",
+      "categoryId": "painting",
+      "rating": 4.3,
+      "reviewCount": 31,
+      "completedJobs": 73,
+      "experienceYears": 5,
+      "hourlyRate": 2000,
+      "location": "Moratuwa",
+      "isAvailable": false,
+      "description": "Residential painting and wall finishing specialist.",
+      "skills": [
+        "Wall painting",
+        "Putty work",
+        "Finishing"
+      ]
+    },
+    {
+      "id": "p017",
+      "name": "Nimal Fernando",
+      "categoryId": "ac_repair",
+      "rating": 4.9,
+      "reviewCount": 72,
+      "completedJobs": 168,
+      "experienceYears": 11,
+      "hourlyRate": 3800,
+      "location": "Colombo",
+      "isAvailable": true,
+      "description": "Senior AC technician for residential and commercial systems.",
+      "skills": [
+        "AC repair",
+        "AC installation",
+        "System diagnostics"
+      ]
+    },
+    {
+      "id": "p018",
+      "name": "Amila Senanayake",
+      "categoryId": "cleaning",
+      "rating": 4.5,
+      "reviewCount": 39,
+      "completedJobs": 94,
+      "experienceYears": 6,
+      "hourlyRate": 1750,
+      "location": "Nawala",
+      "isAvailable": true,
+      "description": "Professional cleaning service provider.",
+      "skills": [
+        "Home cleaning",
+        "Office cleaning",
+        "Move-out cleaning"
+      ]
+    },
+    {
+      "id": "p019",
+      "name": "Kushan Silva",
+      "categoryId": "plumbing",
+      "rating": 4.6,
+      "reviewCount": 49,
+      "completedJobs": 116,
+      "experienceYears": 8,
+      "hourlyRate": 2550,
+      "location": "Homagama",
+      "isAvailable": true,
+      "description": "Plumber specializing in water supply and drainage systems.",
+      "skills": [
+        "Drain repair",
+        "Pipe fitting",
+        "Water tanks"
+      ]
+    },
+    {
+      "id": "p020",
+      "name": "Dilshan Perera",
+      "categoryId": "electrical",
+      "rating": 4.3,
+      "reviewCount": 28,
+      "completedJobs": 67,
+      "experienceYears": 5,
+      "hourlyRate": 2750,
+      "location": "Panadura",
+      "isAvailable": true,
+      "description": "Electrician for residential electrical maintenance.",
+      "skills": [
+        "Lighting",
+        "Socket repair",
+        "Wiring"
+      ]
+    },
+    {
+      "id": "p021",
+      "name": "Chamara Bandara",
+      "categoryId": "carpentry",
+      "rating": 4.7,
+      "reviewCount": 57,
+      "completedJobs": 135,
+      "experienceYears": 9,
+      "hourlyRate": 3000,
+      "location": "Kesbewa",
+      "isAvailable": true,
+      "description": "Professional carpenter for custom furniture projects.",
+      "skills": [
+        "Custom furniture",
+        "Kitchen cabinets",
+        "Woodwork"
+      ]
+    },
+    {
+      "id": "p022",
+      "name": "Gayan Silva",
+      "categoryId": "painting",
+      "rating": 4.7,
+      "reviewCount": 53,
+      "completedJobs": 124,
+      "experienceYears": 9,
+      "hourlyRate": 2400,
+      "location": "Colombo",
+      "isAvailable": true,
+      "description": "Interior and exterior painting professional.",
+      "skills": [
+        "Interior painting",
+        "Exterior painting",
+        "Wall finishing"
+      ]
+    },
+    {
+      "id": "p023",
+      "name": "Harsha Fernando",
+      "categoryId": "ac_repair",
+      "rating": 4.2,
+      "reviewCount": 25,
+      "completedJobs": 59,
+      "experienceYears": 4,
+      "hourlyRate": 3000,
+      "location": "Dehiwala",
+      "isAvailable": false,
+      "description": "AC servicing and troubleshooting technician.",
+      "skills": [
+        "AC servicing",
+        "Troubleshooting",
+        "Filter cleaning"
+      ]
+    },
+    {
+      "id": "p024",
+      "name": "Suresh Kumar",
+      "categoryId": "cleaning",
+      "rating": 4.4,
+      "reviewCount": 34,
+      "completedJobs": 81,
+      "experienceYears": 6,
+      "hourlyRate": 1850,
+      "location": "Kotte",
+      "isAvailable": true,
+      "description": "Home and commercial cleaning specialist.",
+      "skills": [
+        "Deep cleaning",
+        "Office cleaning",
+        "Floor cleaning"
+      ]
+    },
+    {
+      "id": "p025",
+      "name": "Kasun Madushan",
+      "categoryId": "plumbing",
+      "rating": 4.8,
+      "reviewCount": 68,
+      "completedJobs": 149,
+      "experienceYears": 10,
+      "hourlyRate": 2700,
+      "location": "Sri Jayawardenepura Kotte",
+      "isAvailable": true,
+      "description": "Experienced plumber for residential plumbing solutions.",
+      "skills": [
+        "Leak repair",
+        "Pipe installation",
+        "Drain cleaning"
+      ]
+    },
+    {
+      "id": "p026",
+      "name": "Ravindu Perera",
+      "categoryId": "electrical",
+      "rating": 4.5,
+      "reviewCount": 42,
+      "completedJobs": 99,
+      "experienceYears": 7,
+      "hourlyRate": 3100,
+      "location": "Nugegoda",
+      "isAvailable": true,
+      "description": "Electrician for installation and maintenance work.",
+      "skills": [
+        "Wiring",
+        "Lighting",
+        "Electrical maintenance"
+      ]
+    },
+    {
+      "id": "p027",
+      "name": "Sanjeewa Silva",
+      "categoryId": "carpentry",
+      "rating": 4.3,
+      "reviewCount": 30,
+      "completedJobs": 72,
+      "experienceYears": 5,
+      "hourlyRate": 2500,
+      "location": "Maharagama",
+      "isAvailable": true,
+      "description": "Carpenter for household furniture and repairs.",
+      "skills": [
+        "Furniture repair",
+        "Door installation",
+        "Woodwork"
+      ]
+    },
+    {
+      "id": "p028",
+      "name": "Tharuka Fernando",
+      "categoryId": "painting",
+      "rating": 4.5,
+      "reviewCount": 36,
+      "completedJobs": 85,
+      "experienceYears": 6,
+      "hourlyRate": 2250,
+      "location": "Kottawa",
+      "isAvailable": true,
+      "description": "Painting professional for homes and small businesses.",
+      "skills": [
+        "Interior painting",
+        "Wall preparation",
+        "Color matching"
+      ]
+    },
+    {
+      "id": "p029",
+      "name": "Asanka Jayasuriya",
+      "categoryId": "ac_repair",
+      "rating": 4.6,
+      "reviewCount": 47,
+      "completedJobs": 105,
+      "experienceYears": 8,
+      "hourlyRate": 3400,
+      "location": "Battaramulla",
+      "isAvailable": true,
+      "description": "AC technician for repair, maintenance and installation.",
+      "skills": [
+        "AC repair",
+        "AC installation",
+        "Gas charging"
+      ]
+    },
+    {
+      "id": "p030",
+      "name": "Rohitha Perera",
+      "categoryId": "cleaning",
+      "rating": 4.7,
+      "reviewCount": 58,
+      "completedJobs": 137,
+      "experienceYears": 8,
+      "hourlyRate": 1950,
+      "location": "Colombo",
+      "isAvailable": true,
+      "description": "Professional cleaner for homes and commercial spaces.",
+      "skills": [
+        "Deep cleaning",
+        "House cleaning",
+        "Commercial cleaning"
+      ]
+    }
+  ]
+}
